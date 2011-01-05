@@ -1,9 +1,10 @@
 package delta.tools.images.sitebuilder;
 
 import java.io.File;
-import java.util.Iterator;
-import java.util.List;
 
+import delta.common.framework.jobs.JobPool;
+import delta.common.framework.jobs.MultiThreadedJobExecutor;
+import delta.common.framework.jobs.gui.swing.MultiThreadedProgressDialog;
 import delta.common.utils.configuration.Configuration;
 import delta.common.utils.configuration.Configurations;
 
@@ -31,14 +32,14 @@ public class MainSiteBuilder
     if (to==null) return;
 
     SiteBuilderConfiguration config=new SiteBuilderConfiguration(from,to);
-    InitialJob job=new InitialJob(config);
-    job.doIt();
-    List<SiteBuilderTask> tasks=job.getTaskList();
-    SiteBuilderTask current;
-    for(Iterator<SiteBuilderTask> it=tasks.iterator();it.hasNext();)
-    {
-      current=it.next();
-      current.doIt();
-    }
+    JobPool pool=new JobPool();
+    InitialJob job=new InitialJob(config,pool);
+    pool.addJob(job);
+    MultiThreadedJobExecutor executor=new MultiThreadedJobExecutor(pool,2);
+    MultiThreadedProgressDialog progressDialog=new MultiThreadedProgressDialog(executor);
+    progressDialog.start();
+    executor.start();
+    executor.waitForCompletion();
+    progressDialog.stop();
   }
 }

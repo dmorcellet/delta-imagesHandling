@@ -1,9 +1,10 @@
 package delta.tools.images.sitebuilder;
 
 import java.io.File;
-import java.util.HashMap;
 
-import delta.common.utils.files.TextFileReader;
+import delta.common.utils.text.EncodingNames;
+import delta.tools.images.sitebuilder.comments.Comments;
+import delta.tools.images.sitebuilder.comments.CommentsLoader;
 
 /**
  * Manages comments for a set of images.
@@ -11,33 +12,21 @@ import delta.common.utils.files.TextFileReader;
  */
 public class ImageCommentsManager
 {
-  private HashMap<String,String> _commentsMap;
+  private Comments _comments;
+  private File _commentsFile;
 
   /**
    * Constructor.
+   * @param sourceDir Source directory.
    * @param commentsFile File where comments are read.
    */
-  public ImageCommentsManager(File commentsFile)
+  public ImageCommentsManager(File sourceDir, File commentsFile)
   {
-    _commentsMap=new HashMap<String,String>();
-    TextFileReader reader=new TextFileReader(commentsFile);
-    if (reader.start())
+    _commentsFile=commentsFile;
+    if ((_commentsFile!=null) && (_commentsFile.exists()))
     {
-      String line;
-      String key,value;
-      while (true)
-      {
-        line=reader.getNextLine();
-        if (line==null) break;
-        int index=line.indexOf('=');
-        if (index!=-1)
-        {
-          key=line.substring(0,index);
-          value=line.substring(index+1);
-          _commentsMap.put(key,value);
-        }
-      }
-      reader.terminate();
+      CommentsLoader loader=new CommentsLoader(EncodingNames.ISO8859_1);
+      _comments=loader.load(sourceDir,_commentsFile);
     }
   }
 
@@ -48,6 +37,11 @@ public class ImageCommentsManager
    */
   public String getComment(String imageName)
   {
-    return _commentsMap.get(imageName);
+    String ret=null;
+    if (_comments!=null)
+    {
+      ret=_comments.getComment(imageName);
+    }
+    return ret;
   }
 }

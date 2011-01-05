@@ -30,7 +30,7 @@ public class SiteBuilderConfiguration
     File labelsFile=new File(_sourceDir,SiteBuilderPathConstants.LABELS_FILE);
     _labelManager=new SiteLabelsManager(labelsFile);
     File commentsFile=new File(_sourceDir,SiteBuilderPathConstants.COMMENTS_FILE);
-    _imageCommentsManager=new ImageCommentsManager(commentsFile);
+    _imageCommentsManager=new ImageCommentsManager(_sourceDir,commentsFile);
     _useFullTitle=false;
   }
 

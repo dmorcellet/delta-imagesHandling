@@ -8,16 +8,15 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import delta.common.framework.jobs.JobImpl;
 import delta.common.utils.files.Path;
-import delta.common.utils.time.chronometers.Chronometer;
-import delta.common.utils.time.chronometers.ChronometerManager;
 import delta.imaging.utils.ImagesHandlingLoggers;
 
 /**
  * HTML page builder for a "choice" page.
  * @author DAM
  */
-public class ChoicePage implements SiteBuilderTask
+public class ChoicePageBuilder implements JobImpl
 {
   private static final Logger _logger=ImagesHandlingLoggers.getImagesHandlingLogger();
 
@@ -33,7 +32,7 @@ public class ChoicePage implements SiteBuilderTask
    * @param path Path of directory to use.
    * @param dirNames List of directories to reference in the page.
    */
-  public ChoicePage(SiteBuilderConfiguration config, Path path, List<String> dirNames)
+  public ChoicePageBuilder(SiteBuilderConfiguration config, Path path, List<String> dirNames)
   {
     _config=config;
     _path=path;
@@ -49,18 +48,15 @@ public class ChoicePage implements SiteBuilderTask
     _pathToResources=tmp.toString();
   }
 
+  public String getLabel()
+  {
+    return "Choice page for "+_path;
+  }
+
   /**
    * Do the job.
    */
   public void doIt()
-  {
-    ChronometerManager chronoMgr=ChronometerManager.getInstance();
-    Chronometer c=chronoMgr.start("Choice page : "+_path);
-    buildPage();
-    chronoMgr.stopRemoveAndDump(c);
-  }
-
-  private void buildPage()
   {
     SiteLabelsManager labelsManager=_config.getLabelManager();
     _targetPath.mkdirs();

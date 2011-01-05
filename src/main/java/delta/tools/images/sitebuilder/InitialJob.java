@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import delta.common.framework.jobs.JobImpl;
+import delta.common.framework.jobs.JobPool;
 import delta.common.utils.files.FileCopy;
 import delta.common.utils.files.FilesFinder;
 import delta.common.utils.files.Path;
@@ -18,6 +20,7 @@ import delta.common.utils.files.filter.ExtensionPredicate;
 import delta.common.utils.files.filter.FileTypePredicate;
 import delta.common.utils.url.URLTools;
 import delta.imaging.utils.ImagesHandlingLoggers;
+import delta.tools.images.sitebuilder.jobs.ImagesList;
 
 /**
  * Initial job of the site builder.
@@ -28,36 +31,28 @@ import delta.imaging.utils.ImagesHandlingLoggers;
  * </ul>
  * @author DAM
  */
-public class InitialJob
+public class InitialJob implements JobImpl
 {
   private static final Logger _logger=ImagesHandlingLoggers.getImagesHandlingLogger();
 
   private SiteBuilderConfiguration _config;
   private FileFilter _imgFilter;
   private FileFilter _dirFilter;
-  private List<SiteBuilderTask> _tasks;
+  private JobPool _pool;
 
   /**
    * Constructor.
    * @param config Site builder's configuration.
+   * @param pool Job pool.
    */
-  public InitialJob(SiteBuilderConfiguration config)
+  public InitialJob(SiteBuilderConfiguration config, JobPool pool)
   {
     _config=config;
+    _pool=pool;
     FileFilter jpgFilter=new ExtensionPredicate("JPG",false);
     FileFilter jpegFilter=new ExtensionPredicate("JPEG",false);
     _imgFilter=new CompoundPredicate(jpgFilter,jpegFilter,CompoundPredicate.MODE_OR);
     _dirFilter=new FileTypePredicate(FileTypePredicate.DIRECTORY);
-    _tasks=new ArrayList<SiteBuilderTask>();
-  }
-
-  /**
-   * Get the list of computed tasks.
-   * @return the list of computed tasks.
-   */
-  public List<SiteBuilderTask> getTaskList()
-  {
-    return _tasks;
   }
 
   /**
@@ -97,13 +92,17 @@ public class InitialJob
     }
   }
 
+  public String getLabel()
+  {
+    return "Initial job";
+  }
+
   /**
    * Do the job.
    */
   public void doIt()
   {
     buildTarget();
-    _tasks.clear();
     doIt(new Path());
   }
 
@@ -146,22 +145,21 @@ public class InitialJob
    */
   private void doImgDir(Path path, List<File> imgs)
   {
+    ImagesList images=new ImagesList(path);
     File sourceDir=new File(_config.getSourceDir(),path.getPath());
     File targetDir=new File(_config.getSourcePicturesDir(),path.getPath());
     targetDir.mkdirs();
     File img;
     File from,to;
-    List<String> imageNames=new ArrayList<String>();
     for(Iterator<File> it=imgs.iterator();it.hasNext();)
     {
       img=it.next();
       from=new File(sourceDir,img.getName());
       to=new File(targetDir,img.getName());
       FileCopy.copy(from,to);
-      imageNames.add(img.getName());
+      images.addImage(img.getName());
     }
-    Collections.sort(imageNames);
-    _tasks.add(new ImagePages(_config,path,imageNames));
+    _pool.addJob(new ImagePages(_config,images,_pool));
   }
 
   /**
@@ -187,7 +185,7 @@ public class InitialJob
       }
     }
     Collections.sort(dirNames);
-    _tasks.add(new ChoicePage(_config,path,dirNames));
+    _pool.addJob(new ChoicePageBuilder(_config,path,dirNames));
   }
 
   /**
@@ -202,8 +200,8 @@ public class InitialJob
     File targetDir=new File(_config.getSourcePicturesDir(),path.getPath());
     // Copy images to sourceDirs/path/OTHER
     {
-      List<String> imageNames=new ArrayList<String>();
       Path otherPath=path.buildChildPath(SiteBuilderPathConstants.OTHER);
+      ImagesList images=new ImagesList(otherPath);
       File imgTargetDir=new File(targetDir,SiteBuilderPathConstants.OTHER);
       imgTargetDir.mkdirs();
       File img;
@@ -214,10 +212,9 @@ public class InitialJob
         from=new File(sourceDir,img.getName());
         to=new File(imgTargetDir,img.getName());
         FileCopy.copy(from,to);
-        imageNames.add(img.getName());
+        images.addImage(img.getName());
       }
-      Collections.sort(imageNames);
-      _tasks.add(new ImagePages(_config,otherPath,imageNames));
+      _pool.addJob(new ImagePages(_config,images,_pool));
     }
     // Handle dirs
     List<String> dirNames=new ArrayList<String>();
@@ -232,6 +229,6 @@ public class InitialJob
     }
     Collections.sort(dirNames);
     dirNames.add("autres");
-    _tasks.add(new ChoicePage(_config,path,dirNames));
+    _pool.addJob(new ChoicePageBuilder(_config,path,dirNames));
   }
 }
