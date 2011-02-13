@@ -12,12 +12,20 @@ public class Comments
   private HashMap<File,String> _commentsByFile;
   private HashMap<String,String> _commentsByFileName;
 
+  /**
+   * Constructor.
+   */
   public Comments()
   {
     _commentsByFile=new HashMap<File,String>();
     _commentsByFileName=new HashMap<String,String>();
   }
 
+  /**
+   * Set the comments for a given image file.
+   * @param file Image file.
+   * @param text Comment to set.
+   */
   public void setComment(File file, String text)
   {
     _commentsByFile.put(file,text);
@@ -29,15 +37,14 @@ public class Comments
     }
   }
 
+  /**
+   * Get the comment for a given image file.
+   * @param file Image name.
+   * @return A comment.
+   */
   public String getComment(String file)
   {
     String ret=_commentsByFileName.get(file);
-    return ret;
-  }
-
-  public String getComment(File file)
-  {
-    String ret=_commentsByFile.get(file);
     return ret;
   }
 }

@@ -3,95 +3,89 @@ package delta.tools.images.sitebuilder.comments;
 import java.io.File;
 
 import delta.common.utils.files.TextFileReader;
-import delta.common.utils.text.EncodingNames;
 import delta.common.utils.text.EndOfLine;
 
 /**
+ * Loader for a comments file.
  * @author DAM
  */
 public class CommentsLoader
 {
   private String _encoding;
-  private File _sourceDir;
-  private Comments _comments;
-  private StringBuilder _comment;
-  private String _file;
   private boolean _doCheckSourceFile;
 
+  /**
+   * Constructor.
+   * @param encodingName Encoding to use.
+   */
   public CommentsLoader(String encodingName)
   {
     _encoding=encodingName;
     _doCheckSourceFile=true;
-    reset();
   }
 
-  private void reset()
-  {
-    _file=null;
-    _comment=new StringBuilder();
-  }
-
+  /**
+   * Load a set of comments.
+   * @param sourceDir Directory to use as a base path for files. 
+   * @param commentsFile File to read.
+   * @return A comments manager.
+   */
   public Comments load(File sourceDir, File commentsFile)
   {
     Comments ret=null;
-    _sourceDir=sourceDir;
     TextFileReader reader=new TextFileReader(commentsFile,_encoding);
     if (reader.start())
     {
-      _comments=new Comments();
-      reset();
+      Comments comments=new Comments();
+      StringBuilder comment=new StringBuilder();
       String line;
+      String file=null;
       while (true)
       {
         line=reader.getNextLine();
         if (line==null) break;
         if (line.startsWith(".\\"))
         {
-          if (_file!=null)
+          if (file!=null)
           {
-            flush();
+            flush(sourceDir,file,comments,comment.toString());
+            comment.setLength(0);
           }
-          _file=line;
+          file=line;
         }
         else
         {
-          if (_comment.length()>0) {
-            _comment.append(EndOfLine.UNIX);
+          if (comment.length()>0) {
+            comment.append(EndOfLine.UNIX);
           }
-          _comment.append(line);
+          comment.append(line);
         }
       }
-      flush();
+      flush(sourceDir,file,comments,comment.toString());
+      comment.setLength(0);
       reader.terminate();
-      ret=_comments;
-      _comments=null;
+      ret=comments;
     }
     return ret;
   }
 
-  private void flush()
+  private void flush(File sourceDir, String file, Comments comments, String comment)
   {
-    if (_comments!=null)
+    if (file!=null)
     {
-      if (_file!=null)
+      if ((comment!=null) && (comment.length()>0))
       {
-        if ((_comment!=null) && (_comment.length()>0))
+        File sourceFile=new File(sourceDir,normalizeFileName(file));
+        if (_doCheckSourceFile)
         {
-          String comment=_comment.toString();
-          File sourceFile=new File(_sourceDir,normalizeFileName(_file));
-          if (_doCheckSourceFile)
+          if (!sourceFile.canRead())
           {
-            if (!sourceFile.canRead())
-            {
-              System.err.println("Cannot read file ["+sourceFile+"]");
-            }
+            System.err.println("Cannot read file ["+sourceFile+"]");
           }
-          _comments.setComment(sourceFile,comment);
-          _comment.setLength(0);
         }
+        comments.setComment(sourceFile,comment);
       }
     }
-    _file=null;
   }
 
   private String normalizeFileName(String fileName)
@@ -104,6 +98,7 @@ public class CommentsLoader
     return fileName;
   }
 
+  /*
   public static void main(String[] args)
   {
     File f=new File("/home/dm/tmp/usa/album photos USA/texte.txt");
@@ -111,4 +106,5 @@ public class CommentsLoader
     CommentsLoader l=new CommentsLoader(EncodingNames.ISO8859_1);
     Comments c=l.load(sourceDir,f);
   }
+  */
 }

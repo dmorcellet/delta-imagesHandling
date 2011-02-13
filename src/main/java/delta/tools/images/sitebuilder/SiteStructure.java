@@ -5,6 +5,7 @@ import java.io.File;
 import delta.common.utils.files.Path;
 
 /**
+ * Encapsulates site structure information.
  * @author DAM
  */
 public class SiteStructure
@@ -13,6 +14,10 @@ public class SiteStructure
   private File _siteDir;
   private File _sourcePicturesDir;
 
+  /**
+   * Constructor.
+   * @param to Root path for the site.
+   */
   public SiteStructure(File to)
   {
     _targetDir=to;
@@ -47,6 +52,12 @@ public class SiteStructure
     return _sourcePicturesDir;
   }
 
+  /**
+   * Get the relative path from an images directory
+   * to the site root directory. 
+   * @param imagesDir Images directory to use.
+   * @return A relative path.
+   */
   public String getRelativePathFromImagesDirToSiteRoot(Path imagesDir)
   {
     StringBuffer tmp=new StringBuffer();
@@ -59,6 +70,12 @@ public class SiteStructure
     return ret;
   }
 
+  /**
+   * Get the relative path from an images directory
+   * to the site resources directory. 
+   * @param imagesDir Images directory to use.
+   * @return A relative path.
+   */
   public String getRelativePathFromImagesDirToResources(Path imagesDir)
   {
     StringBuffer tmp=new StringBuffer();

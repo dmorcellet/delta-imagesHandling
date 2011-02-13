@@ -3,6 +3,7 @@ package delta.tools.images.sitebuilder;
 import java.awt.Dimension;
 
 /**
+ * Encapsulates site preferences.
  * @author DAM
  */
 public class SitePreferences
@@ -12,6 +13,11 @@ public class SitePreferences
   private static final int MAX_WIDTH_THUMB=150;
   private static final int MAX_HEIGHT_THUMB=150;
 
+  /**
+   * Compute the dimension of a small image.
+   * @param d Dimension of the source image.
+   * @return A dimension.
+   */
   public Dimension computeSmallImageDimension(Dimension d)
   {
     int maxWidth=MAX_WIDTH_IMAGE;
@@ -35,6 +41,11 @@ public class SitePreferences
     return new Dimension(width,height);
   }
 
+  /**
+   * Compute the dimension of a thumbnail image.
+   * @param d Dimension of the source image.
+   * @return A dimension.
+   */
   public Dimension computeThumbnailDimension(Dimension d)
   {
     int maxWidth=MAX_WIDTH_THUMB;
