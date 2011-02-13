@@ -60,11 +60,12 @@ public class InitialJob implements JobImpl
    */
   private void buildTarget()
   {
-    File targetDir=_config.getTargetDir();
+    SiteStructure siteStructure=_config.getSiteStructure();
+    File targetDir=siteStructure.getTargetDir();
     targetDir.mkdirs();
-    File siteDir=_config.getSiteDir();
+    File siteDir=siteStructure.getSiteDir();
     siteDir.mkdirs();
-    File sourcePicturesDir=_config.getSourcePicturesDir();
+    File sourcePicturesDir=siteStructure.getSourcePicturesDir();
     sourcePicturesDir.mkdirs();
 
     File resources=new File(siteDir,SiteBuilderPathConstants.RESOURCES);
@@ -146,8 +147,9 @@ public class InitialJob implements JobImpl
   private void doImgDir(Path path, List<File> imgs)
   {
     ImagesList images=new ImagesList(path);
+    SiteStructure siteStructure=_config.getSiteStructure();
     File sourceDir=new File(_config.getSourceDir(),path.getPath());
-    File targetDir=new File(_config.getSourcePicturesDir(),path.getPath());
+    File targetDir=new File(siteStructure.getSourcePicturesDir(),path.getPath());
     targetDir.mkdirs();
     File img;
     File from,to;
@@ -169,7 +171,8 @@ public class InitialJob implements JobImpl
    */
   private void doDirDir(Path path, List<File> dirs)
   {
-    File targetDir=new File(_config.getSourcePicturesDir(),path.getPath());
+    SiteStructure siteStructure=_config.getSiteStructure();
+    File targetDir=new File(siteStructure.getSourcePicturesDir(),path.getPath());
     targetDir.mkdirs();
     File dir;
     Path newPath;
@@ -197,7 +200,8 @@ public class InitialJob implements JobImpl
   private void doMixedDir(Path path, List<File> imgs, List<File> dirs)
   {
     File sourceDir=new File(_config.getSourceDir(),path.getPath());
-    File targetDir=new File(_config.getSourcePicturesDir(),path.getPath());
+    SiteStructure siteStructure=_config.getSiteStructure();
+    File targetDir=new File(siteStructure.getSourcePicturesDir(),path.getPath());
     // Copy images to sourceDirs/path/OTHER
     {
       Path otherPath=path.buildChildPath(SiteBuilderPathConstants.OTHER);

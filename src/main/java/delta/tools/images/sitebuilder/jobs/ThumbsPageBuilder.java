@@ -19,6 +19,7 @@ import delta.tools.images.sitebuilder.SitePreferences;
 import delta.tools.images.sitebuilder.SiteStructure;
 
 /**
+ * Builder for the thumbs page.
  * @author DAM
  */
 public class ThumbsPageBuilder implements JobImpl
@@ -29,6 +30,11 @@ public class ThumbsPageBuilder implements JobImpl
   private SiteBuilderConfiguration _config;
   private ImagesList _images;
 
+  /**
+   * Constructor.
+   * @param config Configuration.
+   * @param images Images to use.
+   */
   public ThumbsPageBuilder(SiteBuilderConfiguration config, ImagesList images)
   {
     _config=config;
@@ -45,11 +51,11 @@ public class ThumbsPageBuilder implements JobImpl
   {
     SiteLabelsManager labelsManager=_config.getLabelManager();
     ImageCommentsManager commentsManager=_config.getCommentsManager();
+    SiteStructure siteStructure=_config.getSiteStructure();
 
-    SiteStructure siteStructure=new SiteStructure();
     SitePreferences sitePreferences=new SitePreferences();
     Path path=_images.getPath();
-    File targetPath=new File(_config.getSiteDir(),path.getPath());
+    File targetPath=new File(siteStructure.getSiteDir(),path.getPath());
     File indexFile=new File(targetPath,"index.html");
     try
     {

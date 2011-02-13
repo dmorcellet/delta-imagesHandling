@@ -1,44 +1,58 @@
 package delta.tools.images.sitebuilder.jobs;
 
 import delta.common.utils.files.Path;
-import delta.tools.images.sitebuilder.SiteBuilderConfiguration;
 
 /**
+ * Information about an image page.
  * @author DAM
  */
 public class ImagePageInfo
 {
-  private SiteBuilderConfiguration _config;
   private ImagesList _images;
   private int _index;
 
-  public ImagePageInfo(SiteBuilderConfiguration config, ImagesList images, int index)
+  /**
+   * Constructor.
+   * @param images Set of images to use.
+   * @param index Index of image to use in this set. 
+   */
+  public ImagePageInfo(ImagesList images, int index)
   {
-    _config=config;
     _images=images;
     _index=index;
   }
 
-  public SiteBuilderConfiguration getConfig()
-  {
-    return _config;
-  }
-
+  /**
+   * Get the root path of the managed image.
+   * @return a path.
+   */
   public Path getPath()
   {
     return _images.getPath();
   }
 
+  /**
+   * Get the index of image.
+   * @return an image index (starting at 1).
+   */
   public int getIndex()
   {
     return _index+1;
   }
 
+  /**
+   * Get the information about the image.
+   * @return image information.
+   */
   public ImageInfo getImageInfo()
   {
     return _images.getImage(_index);
   }
 
+  /**
+   * Get the number of images in the parent set of images.
+   * @return a positive number.
+   */
   public int getTotalNumberOfImages()
   {
     return _images.getNumberOfImages();

@@ -25,14 +25,17 @@ public class ImagePageBuilder implements JobImpl
 {
   private static final Logger _logger=ImagesHandlingLoggers.getImagesHandlingLogger();
 
+  private SiteBuilderConfiguration _config;
   private ImagePageInfo _info;
   
   /**
    * Constructor.
+   * @param config Configuration.
    * @param info Image page information.
    */
-  public ImagePageBuilder(ImagePageInfo info)
+  public ImagePageBuilder(SiteBuilderConfiguration config, ImagePageInfo info)
   {
+    _config=config;
     _info=info;
   }
 
@@ -45,19 +48,18 @@ public class ImagePageBuilder implements JobImpl
 
   public void doIt()
   {
-    SiteBuilderConfiguration config=_info.getConfig();
-    SiteLabelsManager labelsManager=config.getLabelManager();
+    SiteLabelsManager labelsManager=_config.getLabelManager();
+    SiteStructure siteStructure=_config.getSiteStructure();
     ImageInfo info=_info.getImageInfo();
     String imageName=info.getName();
-    String comment=config.getCommentsManager().getComment(imageName);
+    String comment=_config.getCommentsManager().getComment(imageName);
     Path path=_info.getPath();
-    File targetPath=new File(config.getSiteDir(),path.getPath());
+    File targetPath=new File(siteStructure.getSiteDir(),path.getPath());
     File targetDir=new File(targetPath,SiteBuilderPathConstants.PAGES);
     targetDir.mkdirs();
     int index=_info.getIndex();
     File pageFile=new File(targetDir,index+".html");
 
-    SiteStructure siteStructure=new SiteStructure();
     SitePreferences sitePreferences=new SitePreferences();
     try
     {
@@ -69,7 +71,7 @@ public class ImagePageBuilder implements JobImpl
 
       String title;
       int level=path.getLevel();
-      if (config.useFullTitle())
+      if (_config.useFullTitle())
       {
         StringBuffer tmp=new StringBuffer();
         String pathStr;
@@ -110,7 +112,7 @@ public class ImagePageBuilder implements JobImpl
         fw.print(" <A HREF=\""+(index+1)+".html\"><IMG SRC=\""+pathToResources
             +"r_hand.gif\" border=\"0\"></A>");
       fw.println("</H3>");
-      boolean doLink=config.doLinksToOriginalImages();
+      boolean doLink=_config.doLinksToOriginalImages();
       if (doLink)
       {
         fw.print("<A HREF=\"");

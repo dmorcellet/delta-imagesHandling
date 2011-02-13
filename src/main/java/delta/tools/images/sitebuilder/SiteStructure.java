@@ -9,6 +9,44 @@ import delta.common.utils.files.Path;
  */
 public class SiteStructure
 {
+  private File _targetDir;
+  private File _siteDir;
+  private File _sourcePicturesDir;
+
+  public SiteStructure(File to)
+  {
+    _targetDir=to;
+    _siteDir=new File(_targetDir,SiteBuilderPathConstants.SITE);
+    _sourcePicturesDir=new File(_targetDir,SiteBuilderPathConstants.SOURCE_PICTURES);
+  }
+
+  /**
+   * Get the target directory.
+   * @return the target directory.
+   */
+  public File getTargetDir()
+  {
+    return _targetDir;
+  }
+
+  /**
+   * Get the root directory for the HTML site.
+   * @return the root directory for the HTML site.
+   */
+  public File getSiteDir()
+  {
+    return _siteDir;
+  }
+
+  /**
+   * Get the root directory for the original pictures.
+   * @return the root directory for the original pictures.
+   */
+  public File getSourcePicturesDir()
+  {
+    return _sourcePicturesDir;
+  }
+
   public String getRelativePathFromImagesDirToSiteRoot(Path imagesDir)
   {
     StringBuffer tmp=new StringBuffer();

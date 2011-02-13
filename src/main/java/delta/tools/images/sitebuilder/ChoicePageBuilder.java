@@ -37,7 +37,8 @@ public class ChoicePageBuilder implements JobImpl
     _config=config;
     _path=path;
     _dirNames=dirNames;
-    _targetPath=new File(config.getSiteDir(),path.getPath());
+    SiteStructure siteStructure=config.getSiteStructure();
+    _targetPath=new File(siteStructure.getSiteDir(),path.getPath());
     StringBuffer tmp=new StringBuffer();
     int level=_path.getLevel();
     for(int i=0;i<level;i++) tmp.append("../");

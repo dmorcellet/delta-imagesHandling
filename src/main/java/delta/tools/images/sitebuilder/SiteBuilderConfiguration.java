@@ -9,10 +9,8 @@ import java.io.File;
 public class SiteBuilderConfiguration
 {
   private File _sourceDir;
-  private File _targetDir;
-  private File _siteDir;
-  private File _sourcePicturesDir;
   private boolean _useFullTitle;
+  private SiteStructure _siteStructure;
   private SiteLabelsManager _labelManager;
   private ImageCommentsManager _imageCommentsManager;
 
@@ -24,14 +22,21 @@ public class SiteBuilderConfiguration
   public SiteBuilderConfiguration(File from, File to)
   {
     _sourceDir=from;
-    _targetDir=to;
-    _siteDir=new File(_targetDir,SiteBuilderPathConstants.SITE);
-    _sourcePicturesDir=new File(_targetDir,SiteBuilderPathConstants.SOURCE_PICTURES);
+    _siteStructure=new SiteStructure(to);
     File labelsFile=new File(_sourceDir,SiteBuilderPathConstants.LABELS_FILE);
     _labelManager=new SiteLabelsManager(labelsFile);
     File commentsFile=new File(_sourceDir,SiteBuilderPathConstants.COMMENTS_FILE);
     _imageCommentsManager=new ImageCommentsManager(_sourceDir,commentsFile);
     _useFullTitle=false;
+  }
+
+  /**
+   * Get the site structure.
+   * @return the site structure.
+   */
+  public SiteStructure getSiteStructure()
+  {
+    return _siteStructure;
   }
 
   /**
@@ -68,33 +73,6 @@ public class SiteBuilderConfiguration
   public File getSourceDir()
   {
     return _sourceDir;
-  }
-
-  /**
-   * Get the target directory.
-   * @return the target directory.
-   */
-  public File getTargetDir()
-  {
-    return _targetDir;
-  }
-
-  /**
-   * Get the root directory for the HTML site.
-   * @return the root directory for the HTML site.
-   */
-  public File getSiteDir()
-  {
-    return _siteDir;
-  }
-
-  /**
-   * Get the root directory for the original pictures.
-   * @return the root directory for the original pictures.
-   */
-  public File getSourcePicturesDir()
-  {
-    return _sourcePicturesDir;
   }
 
   /**

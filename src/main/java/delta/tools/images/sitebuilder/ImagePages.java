@@ -45,8 +45,9 @@ public class ImagePages implements JobImpl
     _images=images;
     _pool=pool;
     Path path=_images.getPath();
-    _sourcePath=new File(config.getSourcePicturesDir(),path.getPath());
-    _targetPath=new File(config.getSiteDir(),path.getPath());
+    SiteStructure siteStructure=config.getSiteStructure();
+    _sourcePath=new File(siteStructure.getSourcePicturesDir(),path.getPath());
+    _targetPath=new File(siteStructure.getSiteDir(),path.getPath());
   }
 
   public String getLabel()
@@ -162,8 +163,8 @@ public class ImagePages implements JobImpl
     int nb=_images.getNumberOfImages();
     for(int i=0;i<nb;i++)
     {
-      ImagePageInfo pageJobInfo=new ImagePageInfo(_config,_images,i);
-      ImagePageBuilder job=new ImagePageBuilder(pageJobInfo);
+      ImagePageInfo pageJobInfo=new ImagePageInfo(_images,i);
+      ImagePageBuilder job=new ImagePageBuilder(_config,pageJobInfo);
       _pool.addJob(job);
     }
   }
