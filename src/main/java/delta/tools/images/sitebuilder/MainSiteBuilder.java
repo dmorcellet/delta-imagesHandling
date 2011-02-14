@@ -1,12 +1,17 @@
 package delta.tools.images.sitebuilder;
 
 import java.io.File;
+import java.util.List;
 
 import delta.common.framework.jobs.JobPool;
 import delta.common.framework.jobs.MultiThreadedJobExecutor;
 import delta.common.framework.jobs.gui.swing.MultiThreadedProgressDialog;
 import delta.common.utils.configuration.Configuration;
 import delta.common.utils.configuration.Configurations;
+import delta.common.utils.files.TextFileReader;
+import delta.tools.images.sitebuilder.selection.AutomaticFilesSelection;
+import delta.tools.images.sitebuilder.selection.FilesSelection;
+import delta.tools.images.sitebuilder.selection.ManualFilesSelection;
 
 /**
  * Main class for the site builder.
@@ -31,9 +36,22 @@ public class MainSiteBuilder
     if (args.length>=2) to=new File(args[1]);
     if (to==null) return;
 
+    File selection=cfg.getFileValue(SECTION,"SELECTION",null);
+    if (args.length>=3) to=new File(args[2]);
+
     SiteBuilderConfiguration config=new SiteBuilderConfiguration(from,to);
     JobPool pool=new JobPool();
-    InitialJob job=new InitialJob(config,pool);
+    FilesSelection filesFetcher;
+    if (selection!=null)
+    {
+      List<String> files=TextFileReader.readAsLines(selection);
+      filesFetcher=new ManualFilesSelection(files);
+    }
+    else
+    {
+      filesFetcher=new AutomaticFilesSelection(config.getSourceDir());
+    }
+    InitialJob job=new InitialJob(config,pool,filesFetcher);
     pool.addJob(job);
     MultiThreadedJobExecutor executor=new MultiThreadedJobExecutor(pool,2);
     MultiThreadedProgressDialog progressDialog=new MultiThreadedProgressDialog(executor);

@@ -11,17 +11,20 @@ import delta.common.utils.files.Path;
  */
 public class ImagesList
 {
-  private Path _path;
+  private Path _sourcePath;
+  private Path _sitePath;
   private List<ImageInfo> _images;
   
   /**
    * Constructor.
-   * @param path Path of the managed images.
+   * @param sourcePath Path of the managed images in the source tree.
+   * @param sitePath Path of the managed images in the site tree.
    */
-  public ImagesList(Path path)
+  public ImagesList(Path sourcePath, Path sitePath)
   {
     _images=new ArrayList<ImageInfo>();
-    _path=path;
+    _sourcePath=sourcePath;
+    _sitePath=sitePath;
   }
 
   /**
@@ -35,12 +38,21 @@ public class ImagesList
   }
 
   /**
-   * Get the path of the images in this list.
+   * Get the path in the source tree of the managed images.
    * @return A path.
    */
-  public Path getPath()
+  public Path getSourcePath()
   {
-    return _path;
+    return _sourcePath;
+  }
+
+  /**
+   * Get the path in the site tree of of the managed images.
+   * @return A path.
+   */
+  public Path getSitePath()
+  {
+    return _sitePath;
   }
 
   /**

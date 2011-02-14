@@ -10,6 +10,11 @@ import delta.common.utils.files.Path;
  */
 public class SiteStructure
 {
+  /**
+   * Name of the source pictures directory.
+   */
+  public static final String SOURCE_PICTURES="originaux";
+
   private File _targetDir;
   private File _siteDir;
   private File _sourcePicturesDir;
@@ -22,7 +27,7 @@ public class SiteStructure
   {
     _targetDir=to;
     _siteDir=new File(_targetDir,SiteBuilderPathConstants.SITE);
-    _sourcePicturesDir=new File(_targetDir,SiteBuilderPathConstants.SOURCE_PICTURES);
+    _sourcePicturesDir=new File(_targetDir,SOURCE_PICTURES);
   }
 
   /**
@@ -81,9 +86,29 @@ public class SiteStructure
     StringBuffer tmp=new StringBuffer();
     tmp.append(getRelativePathFromImagesDirToSiteRoot(imagesDir));
     tmp.append(SiteBuilderPathConstants.RESOURCES);
-    tmp.append(File.separatorChar);
+    tmp.append('/');
     tmp.append(SiteBuilderPathConstants.IMAGE_RESOURCES);
-    tmp.append(File.separatorChar);
+    tmp.append('/');
+    String ret=tmp.toString();
+    return ret;
+  }
+
+  /**
+   * Get the relative path from an images directory
+   * to the site resources directory. 
+   * @param sourcePath Path of images in the source tree.
+   * @param sitePath Path of images in the site tree.
+   * @return A relative path.
+   */
+  public String getRelativePathFromImagesDirToSourceImages(Path sourcePath, Path sitePath)
+  {
+    StringBuffer tmp=new StringBuffer();
+    tmp.append(getRelativePathFromImagesDirToSiteRoot(sitePath));
+    tmp.append("../../");
+    tmp.append(SOURCE_PICTURES);
+    tmp.append('/');
+    tmp.append(sourcePath.getPath());
+    tmp.append('/');
     String ret=tmp.toString();
     return ret;
   }

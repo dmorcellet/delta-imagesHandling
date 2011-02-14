@@ -53,8 +53,9 @@ public class ImagePageBuilder implements JobImpl
     ImageInfo info=_info.getImageInfo();
     String imageName=info.getName();
     String comment=_config.getCommentsManager().getComment(imageName);
-    Path path=_info.getPath();
-    File targetPath=new File(siteStructure.getSiteDir(),path.getPath());
+    Path sourcePath=_info.getSourcePath();
+    Path sitePath=_info.getSitePath();
+    File targetPath=new File(siteStructure.getSiteDir(),sitePath.getPath());
     File targetDir=new File(targetPath,SiteBuilderPathConstants.PAGES);
     targetDir.mkdirs();
     int index=_info.getIndex();
@@ -70,14 +71,14 @@ public class ImagePageBuilder implements JobImpl
       fw.print("<HEAD><TITLE>");
 
       String title;
-      int level=path.getLevel();
+      int level=sitePath.getLevel();
       if (_config.useFullTitle())
       {
         StringBuffer tmp=new StringBuffer();
         String pathStr;
         for(int i=0;i<level;i++)
         {
-          pathStr=labelsManager.getLabel(path.getPath(i));
+          pathStr=labelsManager.getLabel(sitePath.getPath(i));
           tmp.append(pathStr).append(" - ");
         }
         tmp.append(index);
@@ -97,7 +98,7 @@ public class ImagePageBuilder implements JobImpl
 
       Dimension fullSize=new Dimension(info.getWidth(),info.getHeight());
       Dimension smallSize=sitePreferences.computeSmallImageDimension(fullSize);
-      String pathToResources="../"+siteStructure.getRelativePathFromImagesDirToResources(path);
+      String pathToResources="../"+siteStructure.getRelativePathFromImagesDirToResources(sitePath);
       fw.println("</TITLE></HEAD>");
       fw.println("<BODY background=\""+pathToResources+"fond.jpg\">");
       fw.println("<CENTER>");
@@ -116,11 +117,8 @@ public class ImagePageBuilder implements JobImpl
       if (doLink)
       {
         fw.print("<A HREF=\"");
-        String pathToSiteRoot=siteStructure.getRelativePathFromImagesDirToSiteRoot(path);
-        String imagePath=pathToSiteRoot+"../../"
-            +SiteBuilderPathConstants.SOURCE_PICTURES+File.separator
-            +path.getPath()+File.separator+imageName;
-        fw.print(imagePath.replace('\\','/'));
+        String imagePath=siteStructure.getRelativePathFromImagesDirToSourceImages(sourcePath,sitePath)+imageName;
+        fw.print(imagePath);
         fw.print("\">");
       }
       fw.print("<IMG SRC=\"");
@@ -138,7 +136,7 @@ public class ImagePageBuilder implements JobImpl
       if (comment!=null)
       {
         fw.print("<BR><B>");
-        String htmlComment=HtmlConversions.stringToHtml(comment);
+        String htmlComment=HtmlConversions.stringToHtml(comment,true);
         fw.print(htmlComment);
         fw.print("</B>");
       }
@@ -166,7 +164,7 @@ public class ImagePageBuilder implements JobImpl
         }
         else
         {
-          fw.print(labelsManager.getLabel(path.getPath(i-1)));
+          fw.print(labelsManager.getLabel(sitePath.getPath(i-1)));
         }
         fw.print("</A>");
         fw.print(" :: ");

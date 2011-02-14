@@ -27,10 +27,6 @@ public class SiteBuilderPathConstants
    */
   public static final String COMMENTS_FILE="commentaires.txt";
   /**
-   * Name of the source pictures directory.
-   */
-  public static final String SOURCE_PICTURES="originaux";
-  /**
    * Name of the directory that contains HTML pages.
    */
   public static final String PAGES="pages";

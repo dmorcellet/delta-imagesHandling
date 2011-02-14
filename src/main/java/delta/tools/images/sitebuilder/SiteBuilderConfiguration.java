@@ -83,4 +83,13 @@ public class SiteBuilderConfiguration
   {
     return true;
   }
+
+  /**
+   * Indicates if source images shall be copied to the target tree.
+   * @return <code>true</code> to perform copy, <code>false</code> otherwise.
+   */
+  public boolean doCopySourceImages()
+  {
+    return false;
+  }
 }

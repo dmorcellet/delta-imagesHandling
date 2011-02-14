@@ -44,15 +44,16 @@ public class ImagePages implements JobImpl
     _config=config;
     _images=images;
     _pool=pool;
-    Path path=_images.getPath();
+    Path sourcePath=_images.getSourcePath();
+    Path sitePath=_images.getSitePath();
     SiteStructure siteStructure=config.getSiteStructure();
-    _sourcePath=new File(siteStructure.getSourcePicturesDir(),path.getPath());
-    _targetPath=new File(siteStructure.getSiteDir(),path.getPath());
+    _sourcePath=new File(_config.getSourceDir(),sourcePath.getPath());
+    _targetPath=new File(siteStructure.getSiteDir(),sitePath.getPath());
   }
 
   public String getLabel()
   {
-    return "Image pages for "+_images.getPath();
+    return "Image pages for "+_images.getSitePath();
   }
 
   /**
@@ -60,7 +61,7 @@ public class ImagePages implements JobImpl
    */
   public void doIt()
   {
-    Path path=_images.getPath();
+    Path path=_images.getSourcePath();
     if (_logger.isInfoEnabled())
     {
       _logger.info("Handle images for "+path);

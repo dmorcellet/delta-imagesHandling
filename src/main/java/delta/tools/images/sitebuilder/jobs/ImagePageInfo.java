@@ -23,12 +23,21 @@ public class ImagePageInfo
   }
 
   /**
-   * Get the root path of the managed image.
+   * Get the source path of the managed image.
    * @return a path.
    */
-  public Path getPath()
+  public Path getSourcePath()
   {
-    return _images.getPath();
+    return _images.getSourcePath();
+  }
+
+  /**
+   * Get the site path of the managed image.
+   * @return a path.
+   */
+  public Path getSitePath()
+  {
+    return _images.getSitePath();
   }
 
   /**

@@ -43,8 +43,8 @@ public class ThumbsPageBuilder implements JobImpl
 
   public String getLabel()
   {
-    // ToDo Auto-generated method stub
-    return null;
+    Path path=_images.getSitePath();
+    return "Building thumbs page for directory "+path;
   }
 
   public void doIt()
@@ -54,7 +54,7 @@ public class ThumbsPageBuilder implements JobImpl
     SiteStructure siteStructure=_config.getSiteStructure();
 
     SitePreferences sitePreferences=new SitePreferences();
-    Path path=_images.getPath();
+    Path path=_images.getSitePath();
     File targetPath=new File(siteStructure.getSiteDir(),path.getPath());
     File indexFile=new File(targetPath,"index.html");
     try
@@ -90,7 +90,7 @@ public class ThumbsPageBuilder implements JobImpl
       }
       fw.print(title);
       fw.println("</TITLE></HEAD>");
-      String pathToResources=siteStructure.getRelativePathFromImagesDirToResources(_images.getPath());
+      String pathToResources=siteStructure.getRelativePathFromImagesDirToResources(_images.getSitePath());
       fw.println("<BODY background=\""+pathToResources+"/fond.jpg\">");
       fw.println("<CENTER>");
       if (level>0)
@@ -101,8 +101,7 @@ public class ThumbsPageBuilder implements JobImpl
         fw.print("</B>");
         fw.println("</FONT></H1>");
       }
-      fw
-          .println("<TABLE cellpadding=\"2\" cellspacing=\"2\" border=\"0\" width=\"100%\">");
+      fw.println("<TABLE cellpadding=\"2\" cellspacing=\"2\" border=\"0\" width=\"100%\">");
       fw.println("<TBODY>");
 
       int imagesInCurrentRow=0;
@@ -124,7 +123,7 @@ public class ThumbsPageBuilder implements JobImpl
         comment=commentsManager.getComment(imageName);
         if (comment!=null)
         {
-          String htmlComment=HtmlConversions.stringToHtml(comment);
+          String htmlComment=HtmlConversions.stringToHtml(comment,false);
           fw.print("TITLE=\""+htmlComment+"\" ");
         }
         fw.print("WIDTH=\"");
