@@ -105,55 +105,71 @@ public class ImagePages implements JobImpl
       realImageDim=new Dimension(sourceImage.getWidth(),sourceImage.getHeight());
 
       // Handle thumbnail
+      File targetThumbFile=new File(thumbTarget,imageName);
+      if (!targetThumbFile.exists())
       {
-        thumbnailDim=sitePreferences.computeThumbnailDimension(realImageDim);
-        //Chronometer c=chronoMgr.start("thumbnail-"+imageName);
-        if (thumbnailDim.equals(realImageDim))
+        try
         {
-          // Simple copy
-          //Chronometer copyChronometer=chronoMgr.start("copy");
-          FileCopy.copyToDir(sourceFile,thumbTarget);
-          //chronoMgr.stop(copyChronometer);
+          thumbnailDim=sitePreferences.computeThumbnailDimension(realImageDim);
+          //Chronometer c=chronoMgr.start("thumbnail-"+imageName);
+          if (thumbnailDim.equals(realImageDim))
+          {
+            // Simple copy
+            //Chronometer copyChronometer=chronoMgr.start("copy");
+            FileCopy.copyToDir(sourceFile,thumbTarget);
+            //chronoMgr.stop(copyChronometer);
+          }
+          else
+          {
+            // Scale image
+            //Chronometer scaleChronometer=chronoMgr.start("scale");
+            RenderedOp scaledImage=ImageTools.scaleImage(sourceImage,thumbnailDim);
+            //chronoMgr.stop(scaleChronometer);
+            // Write image
+            //Chronometer writeChronometer=chronoMgr.start("write");
+            ImageTools.writeJPEGImage(scaledImage,targetThumbFile);
+            //chronoMgr.stop(writeChronometer);
+          }
+          //chronoMgr.stop(c);
         }
-        else
+        catch(Throwable t)
         {
-          // Scale image
-          //Chronometer scaleChronometer=chronoMgr.start("scale");
-          RenderedOp scaledImage=ImageTools.scaleImage(sourceImage,thumbnailDim);
-          //chronoMgr.stop(scaleChronometer);
-          // Write image
-          //Chronometer writeChronometer=chronoMgr.start("write");
-          File to=new File(thumbTarget,imageName);
-          ImageTools.writeJPEGImage(scaledImage,to);
-          //chronoMgr.stop(writeChronometer);
+          _logger.error("Error when building ["+targetThumbFile+"]",t);
         }
-        //chronoMgr.stop(c);
       }
 
       // Handle smallImage
+      File targetSmallImageFile=new File(smallImgTarget,imageName);
+      if (!targetSmallImageFile.exists())
       {
-        smallImageDim=sitePreferences.computeSmallImageDimension(realImageDim);
-        //Chronometer c=chronoMgr.start("smallImage-"+imageName);
-        if (smallImageDim.equals(realImageDim))
+        try
         {
-          // Simple copy
-          //Chronometer copyChronometer=chronoMgr.start("copy");
-          FileCopy.copyToDir(sourceFile,smallImgTarget);
-          //chronoMgr.stop(copyChronometer);
+          smallImageDim=sitePreferences.computeSmallImageDimension(realImageDim);
+          //Chronometer c=chronoMgr.start("smallImage-"+imageName);
+          if (smallImageDim.equals(realImageDim))
+          {
+            // Simple copy
+            //Chronometer copyChronometer=chronoMgr.start("copy");
+            FileCopy.copyToDir(sourceFile,smallImgTarget);
+            //chronoMgr.stop(copyChronometer);
+          }
+          else
+          {
+            // Scale image
+            //Chronometer scaleChronometer=chronoMgr.start("scale");
+            RenderedOp scaledImage=ImageTools.scaleImage(sourceImage,smallImageDim);
+            //chronoMgr.stop(scaleChronometer);
+            // Write image
+            //Chronometer writeChronometer=chronoMgr.start("write");
+            ImageTools.writeJPEGImage(scaledImage,targetSmallImageFile);
+            //chronoMgr.stop(writeChronometer);
+          }
+          //chronoMgr.stop(c);
         }
-        else
+        catch(Throwable t)
         {
-          // Scale image
-          //Chronometer scaleChronometer=chronoMgr.start("scale");
-          RenderedOp scaledImage=ImageTools.scaleImage(sourceImage,smallImageDim);
-          //chronoMgr.stop(scaleChronometer);
-          // Write image
-          //Chronometer writeChronometer=chronoMgr.start("write");
-          File to=new File(smallImgTarget,imageName);
-          ImageTools.writeJPEGImage(scaledImage,to);
-          //chronoMgr.stop(writeChronometer);
+          _logger.error("Error when building ["+targetSmallImageFile+"]",t);
         }
-        //chronoMgr.stop(c);
       }
       //chronoMgr.stopRemoveAndDump(imgChrono);
     }

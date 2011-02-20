@@ -2,12 +2,18 @@ package delta.tools.images.sitebuilder;
 
 import java.awt.Dimension;
 
+import org.apache.log4j.Logger;
+
+import delta.imaging.utils.ImagesHandlingLoggers;
+
 /**
  * Encapsulates site preferences.
  * @author DAM
  */
 public class SitePreferences
 {
+  private static final Logger _logger=ImagesHandlingLoggers.getImagesHandlingLogger();
+
   private static final int MAX_WIDTH_IMAGE=900;
   private static final int MAX_HEIGHT_IMAGE=600;
   private static final int MAX_WIDTH_THUMB=150;
@@ -64,6 +70,11 @@ public class SitePreferences
       width=(int)(width/factor);
       height=maxHeight;
     }
-    return new Dimension(width,height);
+    Dimension result=new Dimension(width,height);
+    if ((width==0) || (height==0))
+    {
+      _logger.warn("Source dimension: "+d+", result: "+result);
+    }
+    return result;
   }
 }

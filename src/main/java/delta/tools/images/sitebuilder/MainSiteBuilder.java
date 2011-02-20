@@ -37,7 +37,7 @@ public class MainSiteBuilder
     if (to==null) return;
 
     File selection=cfg.getFileValue(SECTION,"SELECTION",null);
-    if (args.length>=3) to=new File(args[2]);
+    if (args.length>=3) selection=new File(args[2]);
 
     SiteBuilderConfiguration config=new SiteBuilderConfiguration(from,to);
     JobPool pool=new JobPool();

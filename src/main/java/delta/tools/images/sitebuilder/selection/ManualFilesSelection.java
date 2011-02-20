@@ -27,6 +27,9 @@ public class ManualFilesSelection implements FilesSelection
 
   private void addItem(String file)
   {
+    if (file==null) return;
+    file=file.trim();
+    if (file.length()==0) return;
     String currentDir="";
     String item;
     while(true)
