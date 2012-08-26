@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import delta.common.framework.jobs.JobImpl;
+import delta.common.framework.jobs.JobSupport;
 import delta.common.utils.files.Path;
 import delta.imaging.utils.ImagesHandlingLoggers;
 
@@ -55,9 +56,18 @@ public class ChoicePageBuilder implements JobImpl
   }
 
   /**
+   * Interrupt job.
+   * @return Always <code>false</code>.
+   */
+  public boolean interrupt()
+  {
+    return false;
+  }
+
+  /**
    * Do the job.
    */
-  public void doIt()
+  public void doIt(JobSupport support)
   {
     SiteLabelsManager labelsManager=_config.getLabelManager();
     _targetPath.mkdirs();

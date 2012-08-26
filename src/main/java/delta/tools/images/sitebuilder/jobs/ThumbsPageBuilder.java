@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import org.apache.log4j.Logger;
 
 import delta.common.framework.jobs.JobImpl;
+import delta.common.framework.jobs.JobSupport;
 import delta.common.utils.files.Path;
 import delta.common.utils.html.HtmlConversions;
 import delta.imaging.utils.ImagesHandlingLoggers;
@@ -47,7 +48,16 @@ public class ThumbsPageBuilder implements JobImpl
     return "Building thumbs page for directory "+path;
   }
 
-  public void doIt()
+  /**
+   * Interrupt job.
+   * @return Always <code>false</code>.
+   */
+  public boolean interrupt()
+  {
+    return false;
+  }
+
+  public void doIt(JobSupport support)
   {
     SiteLabelsManager labelsManager=_config.getLabelManager();
     ImageCommentsManager commentsManager=_config.getCommentsManager();

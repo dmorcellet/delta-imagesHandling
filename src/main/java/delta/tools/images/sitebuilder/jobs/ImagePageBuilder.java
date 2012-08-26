@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import org.apache.log4j.Logger;
 
 import delta.common.framework.jobs.JobImpl;
+import delta.common.framework.jobs.JobSupport;
 import delta.common.utils.files.Path;
 import delta.common.utils.html.HtmlConversions;
 import delta.imaging.utils.ImagesHandlingLoggers;
@@ -46,7 +47,16 @@ public class ImagePageBuilder implements JobImpl
     return "Building HTML page for image "+imageName;
   }
 
-  public void doIt()
+  /**
+   * Interrupt job.
+   * @return Always <code>false</code>.
+   */
+  public boolean interrupt()
+  {
+    return false;
+  }
+
+  public void doIt(JobSupport support)
   {
     SiteLabelsManager labelsManager=_config.getLabelManager();
     SiteStructure siteStructure=_config.getSiteStructure();

@@ -8,7 +8,7 @@ import delta.common.framework.jobs.MultiThreadedJobExecutor;
 import delta.common.framework.jobs.gui.swing.MultiThreadedProgressDialog;
 import delta.common.utils.configuration.Configuration;
 import delta.common.utils.configuration.Configurations;
-import delta.common.utils.files.TextFileReader;
+import delta.common.utils.text.TextUtils;
 import delta.tools.images.sitebuilder.selection.AutomaticFilesSelection;
 import delta.tools.images.sitebuilder.selection.FilesSelection;
 import delta.tools.images.sitebuilder.selection.ManualFilesSelection;
@@ -44,7 +44,7 @@ public class MainSiteBuilder
     FilesSelection filesFetcher;
     if (selection!=null)
     {
-      List<String> files=TextFileReader.readAsLines(selection);
+      List<String> files=TextUtils.readAsLines(selection);
       filesFetcher=new ManualFilesSelection(files);
     }
     else

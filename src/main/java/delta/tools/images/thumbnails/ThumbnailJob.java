@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.DecimalFormat;
 
 import delta.common.framework.jobs.JobImpl;
+import delta.common.framework.jobs.JobSupport;
 
 public class ThumbnailJob implements JobImpl
 {
@@ -30,7 +31,16 @@ public class ThumbnailJob implements JobImpl
     _file=relativePath;
   }
 
-  public void doIt()
+  /**
+   * Interrupt job.
+   * @return Always <code>false</code>.
+   */
+  public boolean interrupt()
+  {
+    return false;
+  }
+
+  public void doIt(JobSupport support)
   {
     ThumbnailBuilder builder=new ThumbnailBuilder();
     File sourceFile=new File(_source,_file.getPath());

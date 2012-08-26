@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import delta.common.framework.jobs.JobImpl;
 import delta.common.framework.jobs.JobPool;
+import delta.common.framework.jobs.JobSupport;
 import delta.common.utils.files.FileCopy;
 import delta.common.utils.files.Path;
 import delta.common.utils.url.URLTools;
@@ -91,9 +92,18 @@ public class InitialJob implements JobImpl
   }
 
   /**
+   * Interrupt job.
+   * @return Always <code>false</code>.
+   */
+  public boolean interrupt()
+  {
+    return false;
+  }
+
+  /**
    * Do the job.
    */
-  public void doIt()
+  public void doIt(JobSupport support)
   {
     buildTarget();
     doIt(new Path());
