@@ -4,7 +4,7 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
-import delta.common.utils.environment.FileSystem;
+import delta.common.utils.environment.User;
 
 public class ImageViewer
 {
@@ -23,7 +23,7 @@ public class ImageViewer
   private File selectFile()
   {
     JFileChooser chooser=new JFileChooser();
-    File rootDir=FileSystem.getDeltaHomeDir();
+    File rootDir=User.getLocalUser().getHomeDir();
     chooser.setCurrentDirectory(rootDir);
     File file=null;
     int ret=chooser.showOpenDialog(null);
