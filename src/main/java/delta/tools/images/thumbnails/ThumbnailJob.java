@@ -6,6 +6,10 @@ import java.text.DecimalFormat;
 import delta.common.framework.jobs.JobImpl;
 import delta.common.framework.jobs.JobSupport;
 
+/**
+ * Job to build a thumbnail.
+ * @author DAM
+ */
 public class ThumbnailJob implements JobImpl
 {
   private static int index=1;

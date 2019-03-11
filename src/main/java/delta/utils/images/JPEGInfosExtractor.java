@@ -12,13 +12,24 @@ import com.sun.image.codec.jpeg.JPEGImageDecoder;
 import delta.common.utils.files.iterator.AbstractFileIteratorCallback;
 import delta.common.utils.files.iterator.FileIterator;
 
+/**
+ * Extractor for JPEG infos.
+ * @author DAM
+ */
 public class JPEGInfosExtractor extends AbstractFileIteratorCallback
 {
+  /**
+   * Constructor.
+   */
   public JPEGInfosExtractor()
   {
   	// Nothing special to do
   }
 
+  /**
+   * Do it!
+   * @param path Root path.
+   */
   public void go(String path)
   {
     FileIterator fi=new FileIterator(new File(path), true, this);
@@ -46,10 +57,16 @@ public class JPEGInfosExtractor extends AbstractFileIteratorCallback
     if (data.length<6) return;
     byte[] exif={69,120,105,102,0,0};
     for(int i=0;i<6;i++)
+    {
       if (exif[i]!=data[i]) return;
+    }
     System.out.println("EXIF OK");
   }
 
+  /**
+   * Handle an image file.
+   * @param file File to handle.
+   */
   public void handleImage(File file)
   {
     try
@@ -58,8 +75,8 @@ public class JPEGInfosExtractor extends AbstractFileIteratorCallback
       JPEGImageDecoder decoder=JPEGCodec.createJPEGDecoder(in);
       decoder.decodeAsBufferedImage();
       JPEGDecodeParam param=decoder.getJPEGDecodeParam();
-      //byte[][] data=param.getMarkerData(JPEGDecodeParam.APP1_MARKER);
-      byte[][] data=null;
+      byte[][] data=param.getMarkerData(JPEGDecodeParam.APP1_MARKER);
+      //byte[][] data=null;
       in.close();
       int length=0;
       int nbParts=0;
@@ -104,16 +121,28 @@ public class JPEGInfosExtractor extends AbstractFileIteratorCallback
     }
   }
 
+  /**
+   * 'enter directory' callback.
+   * @param f Targeted directory.
+   */
   public void enterDirectory(File f)
   {
   	// Nothing special to do
   }
 
+  /**
+   * 'leave directory' callback.
+   * @param f Targeted directory.
+   */
   public void leaveDirectory(File f)
   {
   	// Nothing special to do
   }
 
+  /**
+   * Main method for this tool.
+   * @param args Not used.
+   */
   public static void main(String[] args)
   {
     long time1=System.currentTimeMillis();

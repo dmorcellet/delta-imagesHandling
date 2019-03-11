@@ -29,6 +29,11 @@ public class ImageTools
 {
   private static final Logger _logger=UtilsLoggers.getUtilsLogger();
 
+  /**
+   * Read an image from a file.
+   * @param sourcePath Source file.
+   * @return A JAI image or <code>null</code> if an error occurred.
+   */
   public static RenderedOp readImage(File sourcePath)
   {
     RenderedOp sourceImage=null;
@@ -49,6 +54,12 @@ public class ImageTools
     return sourceImage;
   }
 
+  /**
+   * Scale an image.
+   * @param sourceImage Source image.
+   * @param newDimensions New image dimensions.
+   * @return A new JAI image.
+   */
   public static RenderedOp scaleImage(RenderedOp sourceImage, Dimension newDimensions)
   {
     if (sourceImage==null) return null;
@@ -71,6 +82,12 @@ public class ImageTools
     return scaledImage;
   }
 
+  /**
+   * Write an image as a JPG file.
+   * @param image Source image.
+   * @param to File to write.
+   * @return <code>true</code> if operation was successful, <code>false</code> otherwise.
+   */
   public static boolean writeJPEGImage(RenderedOp image, File to)
   {
     if (image==null) return false;

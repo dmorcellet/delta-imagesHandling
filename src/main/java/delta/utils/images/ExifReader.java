@@ -15,6 +15,10 @@ import org.apache.log4j.Logger;
 import delta.common.utils.files.TextFileReader;
 import delta.imaging.utils.ImagesHandlingLoggers;
 
+/**
+ * EXIF data reader.
+ * @author DAM
+ */
 public class ExifReader
 {
   private static final Logger _logger=ImagesHandlingLoggers.getImagesHandlingLogger();
@@ -45,6 +49,10 @@ public class ExifReader
   }
 
   private List<DateFile> _list;
+
+  /**
+   * Constructor.
+   */
   public ExifReader()
   {
     _list=new ArrayList<DateFile>();
@@ -120,6 +128,11 @@ public class ExifReader
   private static final long OFFSET_JACQUES=-1000*(6*60+47);
   private static final long OFFSET_MICHEL=-1000*(12*60+36);
 
+  /**
+   * Apply offsets to the given date (function of image name).
+   * @param date Input date.
+   * @param name Image name.
+   */
   public void handleOffsets(Date date, String name)
   {
     if (name.startsWith("IMG_"))
@@ -144,6 +157,10 @@ public class ExifReader
     }
   }
 
+  /**
+   * Main method for this tool.
+   * @param args Not used.
+   */
   public static void main(String[] args)
   {
     new ExifReader().go();

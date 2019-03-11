@@ -8,10 +8,15 @@ import delta.common.utils.files.filter.ExtensionPredicate;
 
 
 /**
- * @author dm
+ * Tool.
+ * @author DAM
  */
 public class Main
 {
+  /**
+   * Main method for this tool.
+   * @param args Not used.
+   */
   public static void main(String[] args)
   {
     FileFilter copiesFiles=new ExtensionPredicate("db",false);
@@ -20,6 +25,10 @@ public class Main
     deleter.doIt();
   }
 
+  /**
+   * Another main method for this tool.
+   * @param args Not used.
+   */
   public static void main2(String[] args)
   {
     FileFilter copiesFiles=new FileFilter()

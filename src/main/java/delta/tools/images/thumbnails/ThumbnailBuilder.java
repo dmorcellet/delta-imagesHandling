@@ -12,10 +12,21 @@ import delta.common.utils.time.chronometers.ChronometerManager;
 import delta.imaging.utils.ImagesHandlingLoggers;
 import delta.tools.images.ImageTools;
 
+/**
+ * Thumbnails builder.
+ * @author DAM
+ */
 public class ThumbnailBuilder
 {
   private static final Logger _logger=ImagesHandlingLoggers.getImagesHandlingLogger();
 
+  /**
+   * Build a thumbnail file from an image file.
+   * @param sourcePath Source image file.
+   * @param destPath Thumbnail file to write.
+   * @param config Thumbnail size computer.
+   * @return <code>true</code> if operation was successful, <code>false</code> otherwise.
+   */
   public boolean build(File sourcePath, File destPath, ImageSizeComputer config)
   {
     boolean ok=false;

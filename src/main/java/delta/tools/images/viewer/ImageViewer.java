@@ -6,6 +6,10 @@ import javax.swing.JFileChooser;
 
 import delta.common.utils.environment.User;
 
+/**
+ * Image viewer.
+ * @author DAM
+ */
 public class ImageViewer
 {
   /**
@@ -40,6 +44,10 @@ public class ImageViewer
     frame.setVisible(true);
   }
 
+  /**
+   * Main method for this application.
+   * @param args Not used.
+   */
   public static void main(String[] args)
   {
     new ImageViewer();

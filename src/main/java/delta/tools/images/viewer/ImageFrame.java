@@ -7,23 +7,31 @@ import javax.media.jai.PlanarImage;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import org.apache.log4j.Logger;
-
 import com.sun.media.jai.widget.DisplayJAI;
 
-import delta.imaging.utils.ImagesHandlingLoggers;
 import delta.tools.images.ImageTools;
 
+/**
+ * Image window.
+ * @author DAM
+ */
 public class ImageFrame extends JFrame
 {
-  private static final Logger _logger=ImagesHandlingLoggers.getImagesHandlingLogger();
-
+  /**
+   * Constructor.
+   * @param name Image name.
+   * @param image Image data.
+   */
   public ImageFrame(String name, PlanarImage image)
   {
     super(name);
     init(image);
   }
 
+  /**
+   * Constructor.
+   * @param path Image file.
+   */
   public ImageFrame(File path)
   {
     super(path.getName());

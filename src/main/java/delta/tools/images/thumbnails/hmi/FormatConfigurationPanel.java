@@ -20,6 +20,10 @@ import delta.tools.images.thumbnails.ImageSizeComputer;
 import delta.tools.images.thumbnails.MaxBoundsISComputer;
 import delta.tools.images.thumbnails.ReductionFactorISComputer;
 
+/**
+ * Panel for the configuration of the thumbnail size.
+ * @author DAM
+ */
 public class FormatConfigurationPanel extends JPanel implements ActionListener
 {
   // Max size
@@ -43,6 +47,9 @@ public class FormatConfigurationPanel extends JPanel implements ActionListener
   private static String[] _fieldNames={"Taille maximum","Hauteur","Largeur","Facteur de réduction"};
   private int _selectedMode=0;
 
+  /**
+   * Constructor.
+   */
   public FormatConfigurationPanel()
   {
     build();
@@ -135,6 +142,10 @@ public class FormatConfigurationPanel extends JPanel implements ActionListener
     }
   }
 
+  /**
+   * Check the validity of the input.
+   * @return <code>true</code> if it is valid, <code>false</code> otherwise.
+   */
   public boolean check()
   {
     int minValue=_minValues[_selectedMode];
@@ -188,6 +199,10 @@ public class FormatConfigurationPanel extends JPanel implements ActionListener
     return true;
   }
 
+  /**
+   * Get the image size computer from the current input.
+   * @return An image size computer.
+   */
   public ImageSizeComputer getConfiguration()
   {
     ImageSizeComputer computer;

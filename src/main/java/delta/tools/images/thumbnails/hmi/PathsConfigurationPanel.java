@@ -14,9 +14,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * Panel for the configuration of the input and output paths.
+ * @author DAM
+ */
 public class PathsConfigurationPanel extends JPanel implements ActionListener
 {
-  public static final int NB_COLUMNS=30;
+  /**
+   * Number of columns for the path text fields.
+   */
+  private static final int NB_COLUMNS=30;
 
   private JTextField _sourcePath;
   private JButton _chooseSourcePath;
@@ -25,6 +32,9 @@ public class PathsConfigurationPanel extends JPanel implements ActionListener
   private JButton _chooseTargetPath;
   private JFileChooser _targetChooser;
 
+  /**
+   * Constructor.
+   */
   public PathsConfigurationPanel()
   {
     build();
@@ -76,6 +86,10 @@ public class PathsConfigurationPanel extends JPanel implements ActionListener
     return null;
   }
 
+  /**
+   * Check the validity of the input.
+   * @return <code>true</code> if it is valid, <code>false</code> otherwise.
+   */
   public boolean check()
   {
     String sourcePath=_sourcePath.getText();
@@ -134,6 +148,21 @@ public class PathsConfigurationPanel extends JPanel implements ActionListener
     }
   }
 
-  public String getSourcePath() { return _sourcePath.getText(); }
-  public String getTargetPath() { return _targetPath.getText(); }
+  /**
+   * Get the source path.
+   * @return the source path.
+   */
+  public String getSourcePath()
+  {
+    return _sourcePath.getText();
+  }
+
+  /**
+   * Get the target path.
+   * @return the target path.
+   */
+  public String getTargetPath()
+  {
+    return _targetPath.getText();
+  }
 }

@@ -16,6 +16,10 @@ import javax.swing.border.EtchedBorder;
 
 import delta.tools.images.thumbnails.ImageSizeComputer;
 
+/**
+ * Configuration dialog for the thumbnail generation.
+ * @author DAM
+ */
 public class ConfigurationDialog extends JDialog implements ActionListener
 {
   private FormatConfigurationPanel _formatPanel;
@@ -33,6 +37,10 @@ public class ConfigurationDialog extends JDialog implements ActionListener
     _exitStatus=false;
   }
 
+  /**
+   * Get the exit status for this dialog.
+   * @return <code>true</code> if OK, <code>false</code> if cancel.
+   */
   public boolean getExitStatus()
   {
     return _exitStatus;
@@ -62,16 +70,28 @@ public class ConfigurationDialog extends JDialog implements ActionListener
     pack();
   }
 
+  /**
+   * Get the chosen thumbnail size computer.
+   * @return a thumbnail size computer.
+   */
   public ImageSizeComputer getConfiguration()
   {
     return _formatPanel.getConfiguration();
   }
 
+  /**
+   * Get the chosen source file.
+   * @return a file.
+   */
   public File getSourcePath()
   {
     return new File(_pathsPanel.getSourcePath());
   }
 
+  /**
+   * Get the chose target file.
+   * @return a file.
+   */
   public File getTargetPath()
   {
     return new File(_pathsPanel.getTargetPath());

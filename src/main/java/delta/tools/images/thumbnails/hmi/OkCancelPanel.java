@@ -5,11 +5,18 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+/**
+ * Panel with OK and cancel buttons.
+ * @author DAM
+ */
 public class OkCancelPanel extends JPanel
 {
   private JButton _okButton;
   private JButton _cancelButton;
 
+  /**
+   * Constructor.
+   */
   public OkCancelPanel()
   {
     build();
@@ -24,6 +31,21 @@ public class OkCancelPanel extends JPanel
     add(_cancelButton);
   }
 
-  public JButton getOKButton() { return _okButton; }
-  public JButton getCancelButton() { return _cancelButton; }
+  /**
+   * Get the OK button.
+   * @return the OK button.
+   */
+  public JButton getOKButton()
+  {
+    return _okButton;
+  }
+
+  /**
+   * Get the cancel button.
+   * @return the cancel button.
+   */
+  public JButton getCancelButton()
+  {
+    return _cancelButton;
+  }
 }
