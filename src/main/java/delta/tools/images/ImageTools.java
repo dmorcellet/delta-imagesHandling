@@ -19,7 +19,6 @@ import com.sun.media.jai.codec.ImageEncoder;
 import com.sun.media.jai.codec.JPEGEncodeParam;
 
 import delta.common.utils.io.StreamTools;
-import delta.common.utils.traces.UtilsLoggers;
 
 /**
  * Tool methods for reading, scaling and writing images.
@@ -27,7 +26,7 @@ import delta.common.utils.traces.UtilsLoggers;
  */
 public class ImageTools
 {
-  private static final Logger _logger=UtilsLoggers.getUtilsLogger();
+  private static final Logger LOGGER=Logger.getLogger(ImageTools.class);
 
   /**
    * Read an image from a file.
@@ -45,7 +44,7 @@ public class ImageTools
     }
     catch (IOException ioe)
     {
-      _logger.error("",ioe);
+      LOGGER.error("",ioe);
     }
     finally
     {
@@ -115,7 +114,7 @@ public class ImageTools
     }
     catch (IOException ioe)
     {
-      _logger.error("",ioe);
+      LOGGER.error("",ioe);
     }
     finally
     {

@@ -12,7 +12,6 @@ import delta.common.framework.jobs.JobPool;
 import delta.common.framework.jobs.JobSupport;
 import delta.common.utils.files.FileCopy;
 import delta.common.utils.files.Path;
-import delta.imaging.utils.ImagesHandlingLoggers;
 import delta.tools.images.ImageTools;
 import delta.tools.images.sitebuilder.jobs.ImageInfo;
 import delta.tools.images.sitebuilder.jobs.ImagePageBuilder;
@@ -26,7 +25,7 @@ import delta.tools.images.sitebuilder.jobs.ThumbsPageBuilder;
  */
 public class ImagePages implements JobImpl
 {
-  private static final Logger _logger=ImagesHandlingLoggers.getImagesHandlingLogger();
+  private static final Logger LOGGER=Logger.getLogger(ImagePages.class);
 
   private SiteBuilderConfiguration _config;
   private ImagesList _images;
@@ -72,9 +71,9 @@ public class ImagePages implements JobImpl
   public void doIt(JobSupport support)
   {
     Path path=_images.getSourcePath();
-    if (_logger.isInfoEnabled())
+    if (LOGGER.isInfoEnabled())
     {
-      _logger.info("Handle images for "+path);
+      LOGGER.info("Handle images for "+path);
     }
     _targetPath.mkdirs();
     buildImages();
@@ -144,7 +143,7 @@ public class ImagePages implements JobImpl
         }
         catch(Throwable t)
         {
-          _logger.error("Error when building ["+targetThumbFile+"]",t);
+          LOGGER.error("Error when building ["+targetThumbFile+"]",t);
         }
       }
 
@@ -178,7 +177,7 @@ public class ImagePages implements JobImpl
         }
         catch(Throwable t)
         {
-          _logger.error("Error when building ["+targetSmallImageFile+"]",t);
+          LOGGER.error("Error when building ["+targetSmallImageFile+"]",t);
         }
       }
       //chronoMgr.stopRemoveAndDump(imgChrono);

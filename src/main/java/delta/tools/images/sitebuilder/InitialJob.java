@@ -14,7 +14,6 @@ import delta.common.framework.jobs.JobSupport;
 import delta.common.utils.files.FileCopy;
 import delta.common.utils.files.Path;
 import delta.common.utils.url.URLTools;
-import delta.imaging.utils.ImagesHandlingLoggers;
 import delta.tools.images.sitebuilder.jobs.ImagesList;
 import delta.tools.images.sitebuilder.selection.FilesSelection;
 
@@ -22,14 +21,14 @@ import delta.tools.images.sitebuilder.selection.FilesSelection;
  * Initial job of the site builder.
  * This job is made of the following steps :
  * <ul>
- * <li>build the initial structure of the site (including shared ressources),
+ * <li>build the initial structure of the site (including shared resources),
  * <li>analyze the images directory to build the list of jobs that need to be executed.
  * </ul>
  * @author DAM
  */
 public class InitialJob implements JobImpl
 {
-  private static final Logger _logger=ImagesHandlingLoggers.getImagesHandlingLogger();
+  private static final Logger LOGGER=Logger.getLogger(InitialJob.class);
 
   private SiteBuilderConfiguration _config;
   private FilesSelection _filesFetcher;
@@ -76,12 +75,12 @@ public class InitialJob implements JobImpl
         boolean copyOK=FileCopy.copyFromURL(url,new File(imageResources,filesToFind[i]));
         if (!copyOK)
         {
-          _logger.warn("Cannot copy resource "+filesToFind[i]);
+          LOGGER.warn("Cannot copy resource "+filesToFind[i]);
         }
       }
       else
       {
-        _logger.warn("Cannot find URL for resource "+filesToFind[i]);
+        LOGGER.warn("Cannot find URL for resource "+filesToFind[i]);
       }
     }
   }

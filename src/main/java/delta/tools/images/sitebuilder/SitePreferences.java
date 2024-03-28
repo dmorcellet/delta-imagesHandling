@@ -4,15 +4,13 @@ import java.awt.Dimension;
 
 import org.apache.log4j.Logger;
 
-import delta.imaging.utils.ImagesHandlingLoggers;
-
 /**
  * Encapsulates site preferences.
  * @author DAM
  */
 public class SitePreferences
 {
-  private static final Logger _logger=ImagesHandlingLoggers.getImagesHandlingLogger();
+  private static final Logger LOGGER=Logger.getLogger(SitePreferences.class);
 
   private static final int MAX_WIDTH_IMAGE=900;
   private static final int MAX_HEIGHT_IMAGE=600;
@@ -73,7 +71,7 @@ public class SitePreferences
     Dimension result=new Dimension(width,height);
     if ((width==0) || (height==0))
     {
-      _logger.warn("Source dimension: "+d+", result: "+result);
+      LOGGER.warn("Source dimension: "+d+", result: "+result);
     }
     return result;
   }

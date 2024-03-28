@@ -13,7 +13,6 @@ import java.util.StringTokenizer;
 import org.apache.log4j.Logger;
 
 import delta.common.utils.files.TextFileReader;
-import delta.imaging.utils.ImagesHandlingLoggers;
 
 /**
  * EXIF data reader.
@@ -21,7 +20,7 @@ import delta.imaging.utils.ImagesHandlingLoggers;
  */
 public class ExifReader
 {
-  private static final Logger _logger=ImagesHandlingLoggers.getImagesHandlingLogger();
+  private static final Logger LOGGER=Logger.getLogger(ExifReader.class);
 
   static class DateFile
   {
@@ -120,7 +119,7 @@ public class ExifReader
     }
     catch(NumberFormatException nfe)
     {
-      _logger.error("",nfe);
+      LOGGER.error("",nfe);
     }
     return ret;
   }

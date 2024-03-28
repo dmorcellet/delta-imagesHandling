@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import delta.common.framework.jobs.JobImpl;
 import delta.common.framework.jobs.JobSupport;
 import delta.common.utils.files.Path;
-import delta.imaging.utils.ImagesHandlingLoggers;
 
 /**
  * HTML page builder for a "choice" page.
@@ -19,7 +18,7 @@ import delta.imaging.utils.ImagesHandlingLoggers;
  */
 public class ChoicePageBuilder implements JobImpl
 {
-  private static final Logger _logger=ImagesHandlingLoggers.getImagesHandlingLogger();
+  private static final Logger LOGGER=Logger.getLogger(ChoicePageBuilder.class);
 
   private SiteBuilderConfiguration _config;
   private Path _path;
@@ -154,7 +153,7 @@ public class ChoicePageBuilder implements JobImpl
     }
     catch(IOException e)
     {
-      _logger.error("",e);
+      LOGGER.error("",e);
     }
   }
 }

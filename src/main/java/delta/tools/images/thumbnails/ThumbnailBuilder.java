@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 
 import delta.common.utils.time.chronometers.Chronometer;
 import delta.common.utils.time.chronometers.ChronometerManager;
-import delta.imaging.utils.ImagesHandlingLoggers;
 import delta.tools.images.ImageTools;
 
 /**
@@ -18,7 +17,7 @@ import delta.tools.images.ImageTools;
  */
 public class ThumbnailBuilder
 {
-  private static final Logger _logger=ImagesHandlingLoggers.getImagesHandlingLogger();
+  private static final Logger LOGGER=Logger.getLogger(ThumbnailBuilder.class);
 
   /**
    * Build a thumbnail file from an image file.
@@ -63,7 +62,7 @@ public class ThumbnailBuilder
     }
     catch(Exception e)
     {
-      _logger.error("",e);
+      LOGGER.error("",e);
     }
     return ok;
   }

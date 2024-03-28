@@ -11,7 +11,6 @@ import delta.common.framework.jobs.JobImpl;
 import delta.common.framework.jobs.JobSupport;
 import delta.common.utils.files.Path;
 import delta.common.utils.html.HtmlConversions;
-import delta.imaging.utils.ImagesHandlingLoggers;
 import delta.tools.images.sitebuilder.ImageCommentsManager;
 import delta.tools.images.sitebuilder.SiteBuilderConfiguration;
 import delta.tools.images.sitebuilder.SiteBuilderPathConstants;
@@ -25,7 +24,7 @@ import delta.tools.images.sitebuilder.SiteStructure;
  */
 public class ThumbsPageBuilder implements JobImpl
 {
-  private static final Logger _logger=ImagesHandlingLoggers.getImagesHandlingLogger();
+  private static final Logger LOGGER=Logger.getLogger(ThumbsPageBuilder.class);
   private static final int THUMBS_PER_LINE=4;
 
   private SiteBuilderConfiguration _config;
@@ -180,7 +179,7 @@ public class ThumbsPageBuilder implements JobImpl
     }
     catch (IOException e)
     {
-      _logger.error("",e);
+      LOGGER.error("",e);
     }
   }
 }
