@@ -83,7 +83,7 @@ public class SiteStructure
    */
   public String getRelativePathFromImagesDirToResources(Path imagesDir)
   {
-    StringBuffer tmp=new StringBuffer();
+    StringBuilder tmp=new StringBuilder();
     tmp.append(getRelativePathFromImagesDirToSiteRoot(imagesDir));
     tmp.append(SiteBuilderPathConstants.RESOURCES);
     tmp.append('/');
@@ -102,7 +102,7 @@ public class SiteStructure
    */
   public String getRelativePathFromImagesDirToSourceImages(Path sourcePath, Path sitePath)
   {
-    StringBuffer tmp=new StringBuffer();
+    StringBuilder tmp=new StringBuilder();
     tmp.append(getRelativePathFromImagesDirToSiteRoot(sitePath));
     tmp.append("../../");
     tmp.append(SOURCE_PICTURES);

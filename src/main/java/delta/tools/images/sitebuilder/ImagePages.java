@@ -87,7 +87,6 @@ public class ImagePages implements JobImpl
     //ChronometerManager chronoMgr=ChronometerManager.getInstance();
     RenderedOp sourceImage;
     File sourceFile;
-    Dimension realImageDim, thumbnailDim, smallImageDim;
 
     File thumbTarget=new File(_targetPath,SiteBuilderPathConstants.THUMBNAILS);
     thumbTarget.mkdirs();
@@ -111,7 +110,7 @@ public class ImagePages implements JobImpl
 
       // Compute dimensions
       info.setSize(sourceImage.getWidth(),sourceImage.getHeight());
-      realImageDim=new Dimension(sourceImage.getWidth(),sourceImage.getHeight());
+      Dimension realImageDim=new Dimension(sourceImage.getWidth(),sourceImage.getHeight());
 
       // Handle thumbnail
       File targetThumbFile=new File(thumbTarget,imageName);
@@ -119,7 +118,7 @@ public class ImagePages implements JobImpl
       {
         try
         {
-          thumbnailDim=sitePreferences.computeThumbnailDimension(realImageDim);
+          Dimension thumbnailDim=sitePreferences.computeThumbnailDimension(realImageDim);
           //Chronometer c=chronoMgr.start("thumbnail-"+imageName);
           if (thumbnailDim.equals(realImageDim))
           {
@@ -153,7 +152,7 @@ public class ImagePages implements JobImpl
       {
         try
         {
-          smallImageDim=sitePreferences.computeSmallImageDimension(realImageDim);
+          Dimension smallImageDim=sitePreferences.computeSmallImageDimension(realImageDim);
           //Chronometer c=chronoMgr.start("smallImage-"+imageName);
           if (smallImageDim.equals(realImageDim))
           {

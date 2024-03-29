@@ -21,6 +21,11 @@ import javax.swing.JTextField;
 public class PathsConfigurationPanel extends JPanel implements ActionListener
 {
   /**
+   * Label "Erreur".
+   */
+  private static final String ERREUR="Erreur";
+
+  /**
    * Number of columns for the path text fields.
    */
   private static final int NB_COLUMNS=30;
@@ -95,21 +100,21 @@ public class PathsConfigurationPanel extends JPanel implements ActionListener
     String sourcePath=_sourcePath.getText();
     if ((sourcePath==null) || (sourcePath.length()==0))
     {
-      JOptionPane.showMessageDialog(this,"Champ 'Source' non renseigné.","Erreur",JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this,"Champ 'Source' non renseigné.",ERREUR,JOptionPane.ERROR_MESSAGE);
       _chooseSourcePath.requestFocusInWindow();
       return false;
     }
     String targetPath=_targetPath.getText();
     if ((targetPath==null) || (targetPath.length()==0))
     {
-      JOptionPane.showMessageDialog(this,"Champ 'Destination' non renseigné.","Erreur",JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this,"Champ 'Destination' non renseigné.",ERREUR,JOptionPane.ERROR_MESSAGE);
       _chooseTargetPath.requestFocusInWindow();
       return false;
     }
     File fSourcePath=new File(sourcePath);
     if (!fSourcePath.canRead())
     {
-      JOptionPane.showMessageDialog(this,"Champ 'Source' : chemin non lisible.","Erreur",JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this,"Champ 'Source' : chemin non lisible.",ERREUR,JOptionPane.ERROR_MESSAGE);
       _chooseSourcePath.requestFocusInWindow();
       return false;
     }
@@ -119,13 +124,13 @@ public class PathsConfigurationPanel extends JPanel implements ActionListener
       boolean mkdirs=fTargetPath.mkdirs();
       if (!mkdirs)
       {
-        JOptionPane.showMessageDialog(this,"Impossible de créer le répertoire '"+targetPath+"'","Erreur",JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this,"Impossible de créer le répertoire '"+targetPath+"'",ERREUR,JOptionPane.ERROR_MESSAGE);
         return false;
       }
     }
     if (!fTargetPath.canWrite())
     {
-      JOptionPane.showMessageDialog(this,"Champ 'Destination' : chemin non inscriptible.","Erreur",JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this,"Champ 'Destination' : chemin non inscriptible.",ERREUR,JOptionPane.ERROR_MESSAGE);
       _chooseTargetPath.requestFocusInWindow();
       return false;
     }

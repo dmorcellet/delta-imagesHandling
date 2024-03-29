@@ -13,6 +13,8 @@ import java.io.File;
 import javax.media.jai.JAI;
 import javax.media.jai.PlanarImage;
 
+import org.apache.log4j.Logger;
+
 import delta.common.utils.files.iterator.AbstractFileIteratorCallback;
 import delta.common.utils.files.iterator.FileIterator;
 
@@ -21,6 +23,8 @@ import delta.common.utils.files.iterator.FileIterator;
  */
 public class ImageInfo extends AbstractFileIteratorCallback
 {
+  private static final Logger LOGGER=Logger.getLogger(ImageInfo.class);
+
   /**
    * The application entry point.
    * @param args the command line arguments.
@@ -122,11 +126,13 @@ public class ImageInfo extends AbstractFileIteratorCallback
         } // end switch
       }
       else
+      {
         System.out.println("No color model.");
+      }
     }
     catch(Exception e)
     {
-      e.printStackTrace();
+      LOGGER.error("Error when building image info for "+image, e);
     }
   }
 }

@@ -72,7 +72,7 @@ public class ExifReader
       if (line==null) break;
 
       StringTokenizer st=new StringTokenizer(line,"\t");
-      /*fileName*/st.nextToken();
+      st.nextToken(); // filename
       hour=st.nextToken();
       for(int i=0;i<12;i++) st.nextToken();
       completePath=st.nextToken();
@@ -83,7 +83,7 @@ public class ExifReader
       Collections.sort(_list,new DateFileComparator());
     }
     int nb=_list.size();
-    StringBuffer sb=new StringBuffer();
+    StringBuilder sb=new StringBuilder();
     File f;
     File to;
     for(int i=1;i<=nb;i++)
@@ -124,8 +124,8 @@ public class ExifReader
     return ret;
   }
 
-  private static final long OFFSET_JACQUES=-1000*(6*60+47);
-  private static final long OFFSET_MICHEL=-1000*(12*60+36);
+  private static final long OFFSET_JACQUES=-1000L*(6*60+47);
+  private static final long OFFSET_MICHEL=-1000L*(12*60+36);
 
   /**
    * Apply offsets to the given date (function of image name).

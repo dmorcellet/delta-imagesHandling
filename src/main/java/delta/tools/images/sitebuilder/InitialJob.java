@@ -119,15 +119,15 @@ public class InitialJob implements JobImpl
     List<String> dirs=_filesFetcher.getDirectories(path.getPath());
 
     boolean ret=true;
-    if ((dirs.size()==0) && (imgs.size()>0))
+    if ((dirs.isEmpty()) && (!imgs.isEmpty()))
     {
       doImgDir(path,imgs);
     }
-    else if ((dirs.size()>0) && (imgs.size()==0))
+    else if ((!dirs.isEmpty()) && (imgs.isEmpty()))
     {
       doDirDir(path,dirs);
     }
-    else if ((imgs.size()>0) && (dirs.size()>0))
+    else if ((!imgs.isEmpty()) && (!dirs.isEmpty()))
     {
       doMixedDir(path,imgs,dirs);
     }

@@ -12,13 +12,13 @@ import delta.common.framework.jobs.JobSupport;
  */
 public class ThumbnailJob implements JobImpl
 {
-  private static int index=1;
+  private static int _index=1;
 
   private ImageSizeComputer _config;
   private File _source;
   private File _target;
   private File _file;
-  private DecimalFormat nbFormat=new DecimalFormat("000");
+  private DecimalFormat _nbFormat=new DecimalFormat("000");
 
   /**
    * Constructor.
@@ -48,11 +48,11 @@ public class ThumbnailJob implements JobImpl
   {
     ThumbnailBuilder builder=new ThumbnailBuilder();
     File sourceFile=new File(_source,_file.getPath());
-    String name=nbFormat.format(index)+" - "+_file.getName();
+    String name=_nbFormat.format(_index)+" - "+_file.getName();
     File targetFile=new File(_target,name);
     targetFile.getParentFile().mkdirs();
     builder.build(sourceFile,targetFile,_config);
-    index++;
+    _index++;
   }
 
   public String getLabel()

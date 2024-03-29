@@ -83,7 +83,7 @@ public class ImagePageBuilder implements JobImpl
       int level=sitePath.getLevel();
       if (_config.useFullTitle())
       {
-        StringBuffer tmp=new StringBuffer();
+        StringBuilder tmp=new StringBuilder();
         String pathStr;
         for(int i=0;i<level;i++)
         {

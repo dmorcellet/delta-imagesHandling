@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGDecodeParam;
 import com.sun.image.codec.jpeg.JPEGImageDecoder;
@@ -18,6 +20,8 @@ import delta.common.utils.files.iterator.FileIterator;
  */
 public class JPEGInfosExtractor extends AbstractFileIteratorCallback
 {
+  private static final Logger LOGGER=Logger.getLogger(JPEGInfosExtractor.class);
+
   /**
    * Constructor.
    */
@@ -47,7 +51,7 @@ public class JPEGInfosExtractor extends AbstractFileIteratorCallback
       }
       catch(Exception e)
       {
-        e.printStackTrace();
+        LOGGER.error("Error when handling file "+absolute, e);
       }
     }
   }
@@ -76,7 +80,6 @@ public class JPEGInfosExtractor extends AbstractFileIteratorCallback
       decoder.decodeAsBufferedImage();
       JPEGDecodeParam param=decoder.getJPEGDecodeParam();
       byte[][] data=param.getMarkerData(JPEGDecodeParam.APP1_MARKER);
-      //byte[][] data=null;
       in.close();
       int length=0;
       int nbParts=0;
@@ -117,7 +120,7 @@ public class JPEGInfosExtractor extends AbstractFileIteratorCallback
     }
     catch(IOException ioException)
     {
-      ioException.printStackTrace();
+      LOGGER.error("Error when handling file "+file, ioException);
     }
   }
 
@@ -147,7 +150,6 @@ public class JPEGInfosExtractor extends AbstractFileIteratorCallback
   {
     long time1=System.currentTimeMillis();
     JPEGInfosExtractor main=new JPEGInfosExtractor();
-    //main.go("d:\\dada\\docs\\photosCorse");
     main.go("D:\\Donnees\\transfert\\incoming\\portable\\Donnees\\docs\\conneries\\peluches");
     long time2=System.currentTimeMillis();
     System.out.println("Took : "+(time2-time1)+"ms");

@@ -23,17 +23,15 @@ public class SiteLabelsManager
     TextFileReader reader=new TextFileReader(labelsFile);
     if (reader.start())
     {
-      String line;
-      String key,value;
       while (true)
       {
-        line=reader.getNextLine();
+        String line=reader.getNextLine();
         if (line==null) break;
         int index=line.indexOf('=');
         if (index!=-1)
         {
-          key=line.substring(0,index);
-          value=line.substring(index+1);
+          String key=line.substring(0,index);
+          String value=line.substring(index+1);
           _labelsMap.put(key,value);
         }
       }
